@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JobFit — see how well you match, before you apply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAF0EE; --surface:#FFFFFF; --ink:#1E2A2B; --muted:#5E6E6C;
+    --line:#D9E2DF; --match:#2E8B6A; --match-soft:#E1F0E9;
+    --add:#A9711F; --add-soft:#F6EAD4; --accent:#3AA17E; --tip:#F4F8F6;
+    --shadow:0 1px 2px rgba(30,42,43,.04),0 8px 30px rgba(30,42,43,.06);
+    --r:18px;
+  }
+  html[data-theme="dark"]{
+    --bg:#12201D; --surface:#1B2A27; --ink:#E9EFEC; --muted:#9DB2AD;
+    --line:#2C3F3B; --match:#46B98C; --match-soft:#1E3A31;
+    --add:#D6A24A; --add-soft:#33291A; --accent:#52C397; --tip:#16241F;
+    --shadow:0 1px 2px rgba(0,0,0,.2),0 8px 30px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.55;padding:clamp(18px,4vw,52px) clamp(14px,4vw,24px);transition:background .3s,color .3s}
+  .wrap{max-width:940px;margin:0 auto}
+  .toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:10px}
+  select,.icon-btn{font-family:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 13px;cursor:pointer}
+  .icon-btn{width:38px;text-align:center;padding:7px 0}
+  header{margin-bottom:clamp(20px,3.5vw,34px)}
+  .eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 12px}
+  h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(1.85rem,5vw,2.9rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
+  .sub{font-size:clamp(1rem,2.4vw,1.1rem);color:var(--muted);max-width:56ch;margin:0}
+  .privacy{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:.85rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:999px}
+
+  .examples{margin:22px 0 6px}
+  .examples .lab{font-size:.8rem;color:var(--muted);margin-right:6px}
+  .ex-chip{font-family:inherit;font-size:.85rem;border:1px dashed var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:6px 13px;margin:5px 6px 0 0;cursor:pointer;transition:background .12s}
+  .ex-chip:hover{background:var(--match-soft)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  @media(max-width:700px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .card label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
+  .card .hint{font-size:.82rem;color:var(--muted);margin:0 0 12px}
+  textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);line-height:1.5}
+  textarea:focus,input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+  input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.92rem;background:var(--bg);color:var(--ink)}
+
+  .job-entry{position:relative;margin-bottom:12px}
+  .job-entry textarea{min-height:150px}
+  .job-rm{position:absolute;top:8px;right:8px;border:none;background:var(--add-soft);color:var(--add);border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:1rem;line-height:1}
+  .add-job{appearance:none;border:1px dashed var(--line);background:transparent;color:var(--muted);font-family:inherit;font-size:.88rem;padding:9px 15px;border-radius:10px;cursor:pointer;width:100%}
+  .add-job:hover{color:var(--accent);border-color:var(--accent)}
+
+  .extra{margin:4px 0 18px}
+  details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px;box-shadow:var(--shadow)}
+  summary{cursor:pointer;font-weight:500;font-size:.9rem;padding:11px 0;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";color:var(--accent);font-weight:600;margin-right:9px}
+  details[open] summary::before{content:"\2013"}
+  details .body{padding:0 0 16px}
+  details .hint{font-size:.82rem;color:var(--muted);margin:2px 0 11px}
+
+  .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .btn{appearance:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:1rem;color:#fff;background:var(--match);padding:14px 32px;border-radius:999px;box-shadow:0 6px 18px rgba(46,139,106,.28);transition:transform .12s,box-shadow .12s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.ghost{background:var(--surface);color:var(--match);border:1px solid var(--match);box-shadow:none}
+
+  #result{margin-top:28px}
+  .rank-summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px clamp(16px,4vw,26px);margin-bottom:16px}
+  .rank-summary h2{font-family:"Fraunces",serif;font-weight:500;font-size:1.3rem;margin:0 0 14px}
+  .rank-row{display:flex;align-items:center;gap:12px;margin:9px 0}
+  .rank-no{font-family:"Fraunces",serif;font-weight:600;color:var(--accent);width:26px;flex:0 0 auto}
+  .rank-lab{flex:1;min-width:0;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rank-bar{flex:0 0 130px;height:8px;background:var(--bg);border-radius:99px;overflow:hidden}
+  .rank-fill{height:100%;background:var(--match);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .rank-pct{width:34px;text-align:right;font-weight:600;font-size:.9rem;flex:0 0 auto}
+
+  .result-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+  .score-row{display:flex;gap:24px;align-items:center;padding:24px clamp(16px,4vw,28px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .badge{font-family:"Fraunces",serif;font-weight:600;font-size:.95rem;color:var(--accent);background:var(--match-soft);border-radius:999px;padding:3px 12px}
+  .gauge{position:relative;width:120px;height:120px;flex:0 0 auto}
+  .gauge svg{transform:rotate(-90deg)}
+  .gauge .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .gauge .num b{font-family:"Fraunces",serif;font-weight:600;font-size:2.1rem;line-height:1}
+  .gauge .num span{font-size:.66rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+  .verdict{flex:1;min-width:200px}
+  .verdict h3{font-family:"Fraunces",serif;font-weight:500;font-size:1.4rem;margin:0 0 6px}
+  .verdict p{margin:0;color:var(--muted);font-size:.96rem}
+  .lists{padding:clamp(16px,4vw,28px);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:700px){.lists{grid-template-columns:1fr;gap:20px}}
+  .lists h4{font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .dot.g{background:var(--match)} .dot.a{background:var(--add)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .chip{font-size:.84rem;padding:6px 12px;border-radius:999px;font-weight:500;opacity:0;animation:rise .4s ease forwards}
+  .chip.g{background:var(--match-soft);color:var(--match)}
+  .chip.a{background:var(--add-soft);color:var(--add)}
+  .chip.must{box-shadow:inset 0 0 0 1.5px var(--add)}
+  .sublab{font-size:.72rem;color:var(--muted);margin:0 0 7px;text-transform:uppercase;letter-spacing:.06em}
+  .empty{font-size:.88rem;color:var(--muted);font-style:italic}
+
+  .health{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+  .health .top{display:flex;align-items:center;gap:20px;padding:22px clamp(16px,4vw,28px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .health .big{font-family:"Fraunces",serif;font-weight:600;font-size:2.4rem;line-height:1}
+  .health .top div p{margin:0;color:var(--muted)}
+  .health .top div h3{font-family:"Fraunces",serif;font-weight:500;margin:0 0 4px;font-size:1.3rem}
+  .checks{padding:14px clamp(16px,4vw,28px) 24px}
+  .check{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:.94rem;border-bottom:1px solid var(--line)}
+  .check:last-child{border-bottom:none}
+  .mark{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff}
+  .mark.ok{background:var(--match)} .mark.no{background:var(--add)}
+
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.chip{animation:none;opacity:1}.btn{transition:none}.gauge circle,.rank-fill{transition:none!important}}
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:32px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+    <select id="lang" aria-label="Language"></select>
+    <button class="icon-btn" id="theme" aria-label="Toggle dark mode">&#9789;</button>
+  </div>
+
+  <header>
+    <p class="eyebrow">JobFit</p>
+    <h1 data-i18n="tagline"></h1>
+    <p class="sub" data-i18n="sub"></p>
+    <span class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg><span data-i18n="privacy"></span></span>
+
+    <div class="examples">
+      <span class="lab" data-i18n="tryLabel"></span>
+      <span id="exChips"></span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <label for="resume" data-i18n="resumeLabel"></label>
+      <p class="hint" data-i18n="resumeHint"></p>
+      <textarea id="resume" data-i18n-ph="resumePh"></textarea>
+    </div>
+    <div class="card">
+      <label data-i18n="jobLabel"></label>
+      <p class="hint" data-i18n="jobHint"></p>
+      <div id="jobs"></div>
+      <button class="add-job" id="addJob" data-i18n="addJob"></button>
+    </div>
+  </div>
+
+  <div class="extra">
+    <details>
+      <summary data-i18n="fieldSummary"></summary>
+      <div class="body">
+        <p class="hint" data-i18n="fieldHint"></p>
+        <input type="text" id="phrases" data-i18n-ph="fieldPh" />
+      </div>
+    </details>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="go" data-i18n="analyzeBtn"></button>
+    <button class="btn ghost" id="health" data-i18n="healthBtn"></button>
+  </div>
+
+  <div id="result" aria-live="polite"></div>
+  <footer data-i18n="footer"></footer>
+</div>
+
+<script>
+/* ================= i18n ================= */
+const T = {
+  en:{name:"English",tagline:"See how well you fit a job — before you spend an evening applying.",sub:"Paste your resume and one or more job postings. JobFit ranks your match and shows the exact words worth adding. Any role, any field, any country.",privacy:"Everything stays in your browser. Nothing is uploaded or saved.",tryLabel:"Try an example:",resumeLabel:"Your resume",resumeHint:"Paste the full text — copy it from your document.",resumePh:"Paste your resume here…",jobLabel:"The job posting(s)",jobHint:"Paste one job, or add several to rank them.",jobPh:"Paste a job description here…",addJob:"+ Add another job",fieldSummary:"Add key terms from your field (optional)",fieldHint:"Multi-word phrases your field looks for, comma-separated. e.g. patient care, rest api, blueprint reading",fieldPh:"patient care, electronic health records, acute care",analyzeBtn:"See your match",healthBtn:"Check my resume",matched:"Already in your resume",missing:"Worth adding (if true for you)",mustHave:"Must-haves you're missing",niceHave:"Nice-to-haves",ranking:"Your jobs, ranked",healthTitle:"Resume health",footer:"Built to take a little stress out of the search · runs on your device · free · no account.",v_strong:["Strong match","You cover most of what they ask for. A light tailor and you're ready."],v_good:["Good base","You're well in range. Fold in a few terms on the right where they're true for you."],v_tailor:["Worth tailoring","A real foundation here. Adding the missing terms you can back up will lift this a lot."],v_stretch:["A stretch — but doable","Further from your current resume. Worth it if the role excites you; tailor heavily."],v_low:["Low overlap","Your resume and this posting share little wording. If this is your field, add the real skills from the amber list; if not, maybe skip it."]},
+  es:{name:"Español",tagline:"Mira qué tan bien encajas en un empleo — antes de pasar la tarde postulando.",sub:"Pega tu currículum y una o varias ofertas. JobFit ordena tu coincidencia y muestra las palabras exactas que conviene añadir. Cualquier puesto, sector o país.",privacy:"Todo permanece en tu navegador. Nada se sube ni se guarda.",tryLabel:"Prueba un ejemplo:",resumeLabel:"Tu currículum",resumeHint:"Pega el texto completo — cópialo de tu documento.",resumePh:"Pega tu currículum aquí…",jobLabel:"La(s) oferta(s) de empleo",jobHint:"Pega una oferta, o añade varias para compararlas.",jobPh:"Pega una descripción de empleo aquí…",addJob:"+ Añadir otra oferta",fieldSummary:"Añade términos clave de tu sector (opcional)",fieldHint:"Frases de tu sector, separadas por comas. ej.: atención al paciente, rest api",fieldPh:"atención al paciente, historia clínica electrónica",analyzeBtn:"Ver tu coincidencia",healthBtn:"Revisar mi currículum",matched:"Ya en tu currículum",missing:"Conviene añadir (si es cierto)",mustHave:"Imprescindibles que faltan",niceHave:"Deseables",ranking:"Tus empleos, ordenados",healthTitle:"Salud del currículum",footer:"Hecho para quitarte algo de estrés · funciona en tu dispositivo · gratis · sin cuenta.",v_strong:["Buena coincidencia","Cubres casi todo lo que piden. Un ajuste ligero y estás listo."],v_good:["Buena base","Estás en rango. Añade algunos términos de la derecha que sean ciertos para ti."],v_tailor:["Vale la pena ajustar","Hay una base real. Añadir los términos que faltan subirá mucho tu puntuación."],v_stretch:["Un reto — pero posible","Lejos de tu currículum actual. Vale la pena si te entusiasma; ajústalo a fondo."],v_low:["Poca coincidencia","Tu currículum y la oferta comparten pocas palabras. Si es tu sector, añade las habilidades reales; si no, quizá omítela."]},
+  hi:{name:"हिन्दी",tagline:"आवेदन में शाम बिताने से पहले देखें कि आप नौकरी के लिए कितने उपयुक्त हैं।",sub:"अपना रिज़्यूमे और एक या अधिक नौकरी विवरण चिपकाएँ। JobFit आपके मिलान को क्रमबद्ध करता है और जोड़ने योग्य सटीक शब्द दिखाता है। कोई भी भूमिका, क्षेत्र या देश।",privacy:"सब कुछ आपके ब्राउज़र में रहता है। कुछ भी अपलोड या सहेजा नहीं जाता।",tryLabel:"एक उदाहरण आज़माएँ:",resumeLabel:"आपका रिज़्यूमे",resumeHint:"पूरा टेक्स्ट चिपकाएँ — अपने दस्तावेज़ से कॉपी करें।",resumePh:"अपना रिज़्यूमे यहाँ चिपकाएँ…",jobLabel:"नौकरी विवरण",jobHint:"एक नौकरी चिपकाएँ, या तुलना के लिए कई जोड़ें।",jobPh:"नौकरी का विवरण यहाँ चिपकाएँ…",addJob:"+ एक और नौकरी जोड़ें",fieldSummary:"अपने क्षेत्र के मुख्य शब्द जोड़ें (वैकल्पिक)",fieldHint:"अल्पविराम से अलग किए गए वाक्यांश। जैसे: patient care, rest api",fieldPh:"patient care, electronic health records",analyzeBtn:"अपना मिलान देखें",healthBtn:"मेरा रिज़्यूमे जाँचें",matched:"पहले से आपके रिज़्यूमे में",missing:"जोड़ने योग्य (यदि सत्य हो)",mustHave:"अनिवार्य जो छूट रहे हैं",niceHave:"वांछनीय",ranking:"आपकी नौकरियाँ, क्रमबद्ध",healthTitle:"रिज़्यूमे की सेहत",footer:"खोज का तनाव कम करने के लिए बना · आपके डिवाइस पर चलता है · निःशुल्क · खाता नहीं चाहिए।",v_strong:["मज़बूत मिलान","वे जो माँगते हैं उसका अधिकांश आपके पास है। हल्का सा बदलाव और आप तैयार हैं।"],v_good:["अच्छा आधार","आप दायरे में हैं। दाईं ओर के कुछ शब्द जोड़ें जो आप पर सही हों।"],v_tailor:["सुधार करना उचित","यहाँ ठोस आधार है। छूटे शब्द जोड़ने से अंक काफ़ी बढ़ेंगे।"],v_stretch:["कठिन — पर संभव","आपके मौजूदा रिज़्यूमे से दूर। यदि भूमिका पसंद हो तो प्रयास करें।"],v_low:["कम मेल","आपके रिज़्यूमे और इस विवरण में बहुत कम शब्द मिलते हैं। यदि यह आपका क्षेत्र है तो असली कौशल जोड़ें।"]},
+  fr:{name:"Français",tagline:"Voyez à quel point vous correspondez à un poste — avant d'y passer la soirée.",sub:"Collez votre CV et une ou plusieurs offres. JobFit classe votre correspondance et montre les mots exacts à ajouter. Tout poste, tout domaine, tout pays.",privacy:"Tout reste dans votre navigateur. Rien n'est envoyé ni enregistré.",tryLabel:"Essayez un exemple :",resumeLabel:"Votre CV",resumeHint:"Collez le texte complet — copiez-le depuis votre document.",resumePh:"Collez votre CV ici…",jobLabel:"L'offre (ou les offres)",jobHint:"Collez une offre, ou ajoutez-en plusieurs pour les classer.",jobPh:"Collez une description de poste ici…",addJob:"+ Ajouter une offre",fieldSummary:"Ajoutez des termes clés de votre domaine (facultatif)",fieldHint:"Expressions de votre domaine, séparées par des virgules. ex. : rest api, patient care",fieldPh:"soins aux patients, dossier médical électronique",analyzeBtn:"Voir votre correspondance",healthBtn:"Vérifier mon CV",matched:"Déjà dans votre CV",missing:"À ajouter (si c'est vrai)",mustHave:"Indispensables manquants",niceHave:"Souhaitables",ranking:"Vos offres, classées",healthTitle:"Santé du CV",footer:"Conçu pour réduire le stress de la recherche · fonctionne sur votre appareil · gratuit · sans compte.",v_strong:["Bonne correspondance","Vous couvrez l'essentiel. Un léger ajustement et vous êtes prêt."],v_good:["Bonne base","Vous êtes dans la cible. Ajoutez quelques termes à droite qui vous correspondent."],v_tailor:["À ajuster","Une vraie base ici. Ajouter les termes manquants augmentera nettement le score."],v_stretch:["Un défi — mais possible","Loin de votre CV actuel. À tenter si le poste vous motive ; ajustez beaucoup."],v_low:["Faible correspondance","Votre CV et l'offre partagent peu de mots. Si c'est votre domaine, ajoutez les vraies compétences."]},
+  ar:{name:"العربية",tagline:"اعرف مدى ملاءمتك للوظيفة — قبل أن تقضي مساءً كاملاً في التقديم.",sub:"الصق سيرتك الذاتية وإعلان وظيفة أو أكثر. يرتّب JobFit مدى تطابقك ويعرض الكلمات الدقيقة التي يُستحسن إضافتها. أي وظيفة، أي مجال، أي بلد.",privacy:"كل شيء يبقى في متصفحك. لا يُرفع شيء ولا يُحفظ.",tryLabel:"جرّب مثالاً:",resumeLabel:"سيرتك الذاتية",resumeHint:"الصق النص كاملاً — انسخه من مستندك.",resumePh:"الصق سيرتك الذاتية هنا…",jobLabel:"إعلان (إعلانات) الوظيفة",jobHint:"الصق وظيفة واحدة، أو أضف عدة وظائف لترتيبها.",jobPh:"الصق وصف الوظيفة هنا…",addJob:"+ أضف وظيفة أخرى",fieldSummary:"أضف مصطلحات مجالك (اختياري)",fieldHint:"عبارات مجالك مفصولة بفواصل. مثل: rest api, patient care",fieldPh:"رعاية المرضى، السجلات الصحية الإلكترونية",analyzeBtn:"اعرض تطابقك",healthBtn:"افحص سيرتي",matched:"موجود في سيرتك",missing:"يُستحسن إضافته (إن كان صحيحاً)",mustHave:"أساسيات ناقصة",niceHave:"مُفضّلة",ranking:"وظائفك مرتّبة",healthTitle:"صحة السيرة الذاتية",footer:"صُمم لتخفيف ضغط البحث · يعمل على جهازك · مجاني · بدون حساب.",v_strong:["تطابق قوي","تغطي معظم ما يطلبونه. تعديل بسيط وستكون جاهزاً."],v_good:["أساس جيد","أنت ضمن النطاق. أضف بعض المصطلحات على اليمين الصحيحة بشأنك."],v_tailor:["يستحق التعديل","هناك أساس حقيقي. إضافة المصطلحات الناقصة سترفع النتيجة كثيراً."],v_stretch:["تحدٍّ لكنه ممكن","أبعد من سيرتك الحالية. يستحق المحاولة إن حمّستك الوظيفة."],v_low:["تطابق ضعيف","سيرتك والإعلان يتشاركان كلمات قليلة. إن كان هذا مجالك فأضف المهارات الحقيقية."]},
+};
+
+/* ================= engine (validated) ================= */
+const STOP = new Set(("the and for with you your our are will have has this that from their they them all any can may who what when where how why about into than then such able work working role team teams company job position candidate candidates experience years year ability strong excellent good great well high new other more must should would also etc including include includes plus preferred required requirements responsibilities skills looking join help support across within using use provide ensure drive develop manage lead build a an of to in on at as is be by or we us it our your their his her its own deliver delivers reduce reduces reduction improve improves improving improvement improvements project projects responsible partner ownership opportunity environment additional various following core daily department departments related ideal successful you've role's essential minimum qualifications qualification mandatory desirable advantage proficient proficiency expertise seeking offer offers benefits salary apply applicant hiring hire applicants").split(" "));
+const PHRASES = ["power bi","power query","month end","month-end","financial planning","financial modeling","variance analysis","cost to serve","cost-to-serve","data visualization","business intelligence","general ledger","accounts payable","accounts receivable","cash flow","forecast accuracy","stakeholder management","advanced excel","scenario analysis","project management","customer service","data analysis","problem solving","time management","attention to detail","team leadership","communication skills","continuous improvement","quality assurance","supply chain","social media","content creation","customer experience","process improvement","machine learning","cloud computing","unit testing","rest api","ci cd","patient care","electronic health records","acute care","wound care","medication administration","blueprint reading","preventive maintenance","fall protection","google analytics","paid search","email marketing","risk management","agile scrum","lesson planning","classroom management","curriculum development"];
+const VARIANTS = {"js":"javascript","ts":"typescript","k8s":"kubernetes","organise":"organize","organised":"organized","organising":"organizing","organisation":"organization","organisations":"organizations","optimise":"optimize","optimised":"optimized","optimising":"optimizing","optimisation":"optimization","analyse":"analyze","analysed":"analyzed","analysing":"analyzing","prioritise":"prioritize","prioritised":"prioritized","specialise":"specialize","specialised":"specialized","specialisation":"specialization","customise":"customize","customised":"customized","utilise":"utilize","utilised":"utilized","recognise":"recognize","recognised":"recognized","summarise":"summarize","summarised":"summarized","colour":"color","behaviour":"behavior","labour":"labor","favour":"favor","centre":"center","licence":"license","programme":"program","modelling":"modeling","modelled":"modeled","cancelled":"canceled","travelled":"traveled","visualisation":"visualization","catalogue":"catalog","dialogue":"dialog","defence":"defense"};
+const WORD = /[\p{L}][\p{L}\p{N}+#.\-]*/gu;
+const clean = t => t.replace(/^[.\-]+|[.\-]+$/g,"");
+function canon(t){
+  let s=t.toLowerCase().replace(/\u2019/g,"'");
+  s=s.replace(/ci\s*\/\s*cd/g,"ci cd").replace(/\bci-cd\b/g,"ci cd").replace(/node\.js/g,"node").replace(/\.net/g,"dotnet");
+  for(const a in VARIANTS){ s=s.replace(new RegExp("\\b"+a+"\\b","g"),VARIANTS[a]); }
+  return s;
+}
+function reqContext(jc){
+  const sent=jc.split(/[.\n;\u2022]/);
+  const R=/\b(required|require|must|essential|minimum|qualifications|proficien|expertise|you have|you bring|we require)\b/;
+  const P=/\b(preferred|nice to have|bonus|asset|ideally|desirable|advantage|a plus|would be)\b/;
+  return kw=>{let r=false,p=false;for(const s of sent){if(s.includes(kw)){if(R.test(s))r=true;if(P.test(s))p=true;}}return (p&&!r)?"preferred":r?"required":"core";};
+}
+function extractWeighted(jobText,extra,topN){
+  topN=topN||44;
+  const c=canon(jobText);const title=(c.split(/[\n.]/)[0]||"");
+  const phrases=PHRASES.concat(extra.map(canon));
+  const found=phrases.filter(p=>c.includes(p));
+  let stripped=c;found.forEach(p=>stripped=stripped.split(p).join(" "));
+  const counts={};(stripped.match(WORD)||[]).forEach(raw=>{const t=clean(raw);if(t.length>2&&!STOP.has(t))counts[t]=(counts[t]||0)+1;});
+  const ranked=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  const uf=[...new Set(found)];
+  const kws=uf.concat(ranked.filter(w=>!uf.includes(w))).slice(0,topN);
+  const ctx=reqContext(c);
+  return kws.map(kw=>{let w=1;if(title.includes(kw))w+=1.2;const f=counts[kw]||(found.includes(kw)?2:1);if(f>=2)w+=0.4;const k=ctx(kw);if(k==="required")w+=0.6;if(k==="preferred")w-=0.3;return{kw,w:Math.max(0.3,w),req:k};});
+}
+function scoreJob(resume,job,extra){
+  extra=extra||[];const kws=extractWeighted(job,extra);const rc=canon(resume);
+  let tot=0,mat=0;const matched=[],missing=[];
+  kws.forEach(o=>{tot+=o.w;if(rc.includes(o.kw)){mat+=o.w;matched.push(o);}else missing.push(o);});
+  return{pct:tot?Math.round(100*mat/tot):0,matched,missing};
+}
+function healthCheck(resume){
+  const c=resume.toLowerCase();const words=(resume.match(/\S+/g)||[]).length;
+  const hasEmail=/[\w.+-]+@[\w-]+\.[\w.-]+/.test(resume);
+  const hasPhone=/(\+?\d[\d\s().-]{7,})/.test(resume);
+  const numbered=(resume.match(/\d+%|\$\s?\d|\b\d{2,}\b/g)||[]).length;
+  const weak=(c.match(/responsible for|duties included|worked on|in charge of|tasked with/g)||[]).length;
+  const buzz=(c.match(/team player|hard.?working|detail.?oriented|go.?getter|synergy|results.?driven|self.?starter|think outside the box/g)||[]).length;
+  const sections=["experience","education","skills"].filter(s=>c.includes(s));
+  const checks=[
+    {ok:hasEmail,label:"Contact email present"},
+    {ok:hasPhone,label:"Phone number present"},
+    {ok:words>=200&&words<=900,label:"Length: "+words+" words"},
+    {ok:numbered>=3,label:numbered+" achievements with numbers"},
+    {ok:weak===0,label:weak?weak+" weak phrase(s) like \u201cresponsible for\u201d":"Strong action verbs"},
+    {ok:buzz<=1,label:buzz>1?buzz+" clich\u00e9s to cut":"Low on clich\u00e9s"},
+    {ok:sections.length>=2,label:"Sections: "+(sections.join(", ")||"none found")},
+  ];
+  return{score:Math.round(100*checks.filter(x=>x.ok).length/checks.length),checks};
+}
+
+/* ================= examples ================= */
+const EXAMPLES = {
+  Finance:{extra:[],resume:"Hemanth — Finance & Analytics Lead. Improved forecast accuracy 15%. Cut reporting cycle T+10 to T+3. Built Power BI dashboards replacing 4 manual reports. Variance analysis, month-end close, financial planning, SQL, Advanced Excel, Power Query.",job:"Senior Financial Analyst. Required: financial planning, month-end close, variance analysis, Advanced Excel and SQL. Power BI preferred. Stakeholder management essential."},
+  Nurse:{extra:["patient care","electronic health records","acute care","wound care"],resume:"Registered Nurse, acute care ward. Delivered patient care and wound care. Medication administration. Maintained electronic health records. IV therapy, triage.",job:"Registered Nurse required to provide patient care in acute care. Electronic health records essential. Wound care and medication administration. IV therapy preferred."},
+  Developer:{extra:["rest api","unit testing","ci cd"],resume:"Software Engineer. Built REST API services in Python and JS. Unit testing. CI/CD pipelines. React front-end. AWS, Docker, PostgreSQL.",job:"Backend Engineer required. Must have JavaScript and Python. REST API and unit testing essential. CI CD. AWS and Docker preferred."},
+  Trades:{extra:["blueprint reading","preventive maintenance","fall protection"],resume:"Licensed Electrician. Electrical wiring, blueprint reading, preventive maintenance, circuit testing. Fall protection certified. Conduit bending.",job:"Industrial Electrician required. Must have blueprint reading and electrical wiring. Preventive maintenance essential. Fall protection certification."},
+  Marketing:{extra:["social media","content creation","google analytics","paid search"],resume:"Marketing Manager. Ran social media, content creation, paid search, email marketing. Google Analytics. SEO, brand strategy.",job:"Digital Marketing Manager required. Social media, content creation and paid search essential. Google Analytics. Email marketing and SEO preferred."},
+};
+
+/* ================= UI ================= */
+let lang="en";
+function applyLang(code){
+  lang=code;
+  document.documentElement.lang=code;
+  document.documentElement.dir = code==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(T[code][k]) el.textContent=T[code][k]; });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(T[code][k]) el.placeholder=T[code][k]; });
+  document.querySelectorAll(".job-entry textarea").forEach(t=>t.placeholder=T[code].jobPh);
+}
+const langSel=document.getElementById("lang");
+Object.keys(T).forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=T[c].name;langSel.appendChild(o);});
+langSel.addEventListener("change",e=>applyLang(e.target.value));
+
+document.getElementById("theme").addEventListener("click",()=>{
+  const dark=document.documentElement.getAttribute("data-theme")==="dark";
+  document.documentElement.setAttribute("data-theme",dark?"light":"dark");
+  document.getElementById("theme").innerHTML=dark?"\u263D":"\u2600";
+});
+
+const jobsEl=document.getElementById("jobs");
+function addJob(value){
+  const div=document.createElement("div");div.className="job-entry";
+  const ta=document.createElement("textarea");ta.placeholder=T[lang].jobPh;if(value)ta.value=value;
+  const rm=document.createElement("button");rm.className="job-rm";rm.innerHTML="\u00d7";rm.title="Remove";
+  rm.addEventListener("click",()=>{div.remove();syncRemove();});
+  div.appendChild(ta);div.appendChild(rm);jobsEl.appendChild(div);syncRemove();
+}
+function syncRemove(){const ents=jobsEl.querySelectorAll(".job-entry");ents.forEach(e=>e.querySelector(".job-rm").style.display=ents.length>1?"block":"none");}
+document.getElementById("addJob").addEventListener("click",()=>addJob());
+addJob();
+
+document.getElementById("exChips").innerHTML=Object.keys(EXAMPLES).map(k=>`<button class="ex-chip" data-ex="${k}">${k}</button>`).join("");
+document.getElementById("exChips").addEventListener("click",e=>{
+  const k=e.target.getAttribute("data-ex");if(!k)return;const ex=EXAMPLES[k];
+  document.getElementById("resume").value=ex.resume;
+  jobsEl.innerHTML="";addJob(ex.job);
+  document.getElementById("phrases").value=ex.extra.join(", ");
+});
+
+function verdict(p){const t=T[lang];return p>=70?t.v_strong:p>=50?t.v_good:p>=30?t.v_tailor:p>=15?t.v_stretch:t.v_low;}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function labelOf(job,i){const first=(job.split("\n").find(l=>l.trim())||"").trim();return first?first.slice(0,52):("Job "+(i+1));}
+
+function analyze(){
+  const resume=document.getElementById("resume").value.trim();
+  const extra=document.getElementById("phrases").value.split(",").map(s=>s.trim()).filter(Boolean);
+  const jobs=[...jobsEl.querySelectorAll("textarea")].map(t=>t.value.trim()).filter(Boolean);
+  const out=document.getElementById("result");
+  if(!resume||!jobs.length){out.innerHTML=`<div class="result-card"><p style="padding:20px;margin:0;color:var(--muted)">Add your resume and at least one job posting, then press the button.</p></div>`;return;}
+  const data=jobs.map((j,i)=>({label:labelOf(j,i),...scoreJob(resume,j,extra)})).sort((a,b)=>b.pct-a.pct);
+
+  let html="";
+  if(data.length>1){
+    html+=`<div class="rank-summary"><h2>${esc(T[lang].ranking)}</h2>`;
+    data.forEach((d,i)=>{html+=`<div class="rank-row"><span class="rank-no">${i+1}</span><span class="rank-lab">${esc(d.label)}</span><span class="rank-bar"><span class="rank-fill" data-w="${d.pct}"></span></span><span class="rank-pct">${d.pct}</span></div>`;});
+    html+=`</div>`;
+  }
+  data.forEach((d,i)=>{
+    const ver=verdict(d.pct);const C=2*Math.PI*52;
+    const req=d.missing.filter(m=>m.req==="required");const nice=d.missing.filter(m=>m.req!=="required");
+    const chips=(arr,cls,must)=>arr.length?arr.map((o,n)=>`<span class="chip ${cls}${must?' must':''}" style="animation-delay:${n*20}ms">${esc(o.kw)}</span>`).join(""):`<span class="empty">\u2014</span>`;
+    html+=`<div class="result-card">
+      <div class="score-row">
+        ${data.length>1?`<span class="badge">#${i+1}</span>`:``}
+        <div class="gauge"><svg width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="10"/><circle class="arc" cx="60" cy="60" r="52" fill="none" stroke="var(--match)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-off="${C*(1-d.pct/100)}" style="transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)"/></svg><div class="num"><b>${d.pct}</b><span>match</span></div></div>
+        <div class="verdict"><h3>${esc(ver[0])}</h3><p>${esc(ver[1])}</p></div>
+      </div>
+      <div class="lists">
+        <div><h4><span class="dot g"></span>${esc(T[lang].matched)}</h4><div class="chips">${chips(d.matched,"g")}</div></div>
+        <div><h4><span class="dot a"></span>${esc(T[lang].missing)}</h4>
+          ${req.length?`<p class="sublab">${esc(T[lang].mustHave)}</p><div class="chips">${chips(req,"a",true)}</div>`:``}
+          ${nice.length?`<p class="sublab">${req.length?esc(T[lang].niceHave):""}</p><div class="chips">${chips(nice,"a")}</div>`:(req.length?``:`<div class="chips">${chips([],"a")}</div>`)}
+        </div>
+      </div>
+    </div>`;
+  });
+  out.innerHTML=html;
+  requestAnimationFrame(()=>{out.querySelectorAll(".arc").forEach(a=>a.style.strokeDashoffset=a.getAttribute("data-off"));out.querySelectorAll(".rank-fill").forEach(f=>f.style.width=f.getAttribute("data-w")+"%");});
+  out.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+}
+function showHealth(){
+  const resume=document.getElementById("resume").value.trim();const out=document.getElementById("result");
+  if(!resume){out.innerHTML=`<div class="result-card"><p style="padding:20px;margin:0;color:var(--muted)">Paste your resume first, then check its health.</p></div>`;return;}
+  const h=healthCheck(resume);
+  out.innerHTML=`<div class="health"><div class="top"><div class="big">${h.score}</div><div><h3>${esc(T[lang].healthTitle)}</h3><p>${h.score>=80?"Looking strong.":h.score>=50?"Solid, with a few easy wins.":"A few quick fixes will go a long way."}</p></div></div>
+  <div class="checks">${h.checks.map(c=>`<div class="check"><span class="mark ${c.ok?'ok':'no'}">${c.ok?"\u2713":"!"}</span><span>${esc(c.label)}</span></div>`).join("")}</div></div>`;
+  out.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+}
+document.getElementById("go").addEventListener("click",analyze);
+document.getElementById("health").addEventListener("click",showHealth);
+applyLang("en");
+</script>
+</body>
+</html>
