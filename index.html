@@ -33,12 +33,12 @@
   h1{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:clamp(1.85rem,5vw,2.9rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.01em}
   .sub{font-size:clamp(1rem,2.4vw,1.1rem);color:var(--muted);max-width:56ch;margin:0}
   .privacy{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-size:.85rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:7px 13px;border-radius:999px}
- 
+
   .examples{margin:22px 0 6px}
   .examples .lab{font-size:.8rem;color:var(--muted);margin-right:6px}
   .ex-chip{font-family:inherit;font-size:.85rem;border:1px dashed var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:6px 13px;margin:5px 6px 0 0;cursor:pointer;transition:background .12s}
   .ex-chip:hover{background:var(--match-soft)}
- 
+
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
   @media(max-width:700px){.grid{grid-template-columns:1fr}}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
@@ -47,13 +47,13 @@
   textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);line-height:1.5}
   textarea:focus,input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
   input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:.92rem;background:var(--bg);color:var(--ink)}
- 
+
   .job-entry{position:relative;margin-bottom:12px}
   .job-entry textarea{min-height:150px}
   .job-rm{position:absolute;top:8px;right:8px;border:none;background:var(--add-soft);color:var(--add);border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:1rem;line-height:1}
   .add-job{appearance:none;border:1px dashed var(--line);background:transparent;color:var(--muted);font-family:inherit;font-size:.88rem;padding:9px 15px;border-radius:10px;cursor:pointer;width:100%}
   .add-job:hover{color:var(--accent);border-color:var(--accent)}
- 
+
   .extra{margin:4px 0 18px}
   details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px;box-shadow:var(--shadow)}
   summary{cursor:pointer;font-weight:500;font-size:.9rem;padding:11px 0;list-style:none}
@@ -62,12 +62,12 @@
   details[open] summary::before{content:"\2013"}
   details .body{padding:0 0 16px}
   details .hint{font-size:.82rem;color:var(--muted);margin:2px 0 11px}
- 
+
   .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
   .btn{appearance:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:1rem;color:#fff;background:var(--match);padding:14px 32px;border-radius:999px;box-shadow:0 6px 18px rgba(46,139,106,.28);transition:transform .12s,box-shadow .12s}
   .btn:hover{transform:translateY(-1px)}
   .btn.ghost{background:var(--surface);color:var(--match);border:1px solid var(--match);box-shadow:none}
- 
+
   #result{margin-top:28px}
   .rank-summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px clamp(16px,4vw,26px);margin-bottom:16px}
   .rank-summary h2{font-family:"Fraunces",serif;font-weight:500;font-size:1.3rem;margin:0 0 14px}
@@ -77,7 +77,7 @@
   .rank-bar{flex:0 0 130px;height:8px;background:var(--bg);border-radius:99px;overflow:hidden}
   .rank-fill{height:100%;background:var(--match);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1)}
   .rank-pct{width:34px;text-align:right;font-weight:600;font-size:.9rem;flex:0 0 auto}
- 
+
   .result-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
   .score-row{display:flex;gap:24px;align-items:center;padding:24px clamp(16px,4vw,28px);border-bottom:1px solid var(--line);flex-wrap:wrap}
   .badge{font-family:"Fraunces",serif;font-weight:600;font-size:.95rem;color:var(--accent);background:var(--match-soft);border-radius:999px;padding:3px 12px}
@@ -101,7 +101,7 @@
   .chip.must{box-shadow:inset 0 0 0 1.5px var(--add)}
   .sublab{font-size:.72rem;color:var(--muted);margin:0 0 7px;text-transform:uppercase;letter-spacing:.06em}
   .empty{font-size:.88rem;color:var(--muted);font-style:italic}
- 
+
   .health{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
   .health .top{display:flex;align-items:center;gap:20px;padding:22px clamp(16px,4vw,28px);border-bottom:1px solid var(--line);flex-wrap:wrap}
   .health .big{font-family:"Fraunces",serif;font-weight:600;font-size:2.4rem;line-height:1}
@@ -112,7 +112,7 @@
   .check:last-child{border-bottom:none}
   .mark{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff}
   .mark.ok{background:var(--match)} .mark.no{background:var(--add)}
- 
+
   .newgrad{margin:0 0 18px}
   .newgrad .ng-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:700px){.newgrad .ng-grid{grid-template-columns:1fr}}
@@ -151,19 +151,19 @@
     <select id="lang" aria-label="Language"></select>
     <button class="icon-btn" id="theme" aria-label="Toggle dark mode">&#9789;</button>
   </div>
- 
+
   <header>
     <p class="eyebrow">JobFit</p>
     <h1 data-i18n="tagline"></h1>
     <p class="sub" data-i18n="sub"></p>
     <span class="privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg><span data-i18n="privacy"></span></span>
- 
+
     <div class="examples">
       <span class="lab" data-i18n="tryLabel"></span>
       <span id="exChips"></span>
     </div>
   </header>
- 
+
   <div class="grid">
     <div class="card">
       <label for="resume" data-i18n="resumeLabel"></label>
@@ -177,7 +177,7 @@
       <button class="add-job" id="addJob" data-i18n="addJob"></button>
     </div>
   </div>
- 
+
   <details class="newgrad" id="ngPanel">
     <summary data-i18n="ngTitle"></summary>
     <div class="body">
@@ -194,7 +194,7 @@
       <button class="btn" id="ngBuild" data-i18n="ngGenerate" style="margin-top:14px"></button>
     </div>
   </details>
- 
+
   <div class="extra">
     <details>
       <summary data-i18n="fieldSummary"></summary>
@@ -204,18 +204,18 @@
       </div>
     </details>
   </div>
- 
+
   <div class="region-row">
     <label for="region" data-i18n="regionLabel"></label>
     <select id="region"></select>
     <p class="region-note" id="regionNote"></p>
   </div>
- 
+
   <div class="actions">
     <button class="btn" id="go" data-i18n="analyzeBtn"></button>
     <button class="btn ghost" id="health" data-i18n="healthBtn"></button>
   </div>
- 
+
   <div id="result" aria-live="polite"></div>
   <section class="about">
     <h2 data-i18n="aboutTitle"></h2>
@@ -236,7 +236,7 @@
   </section>
   <footer data-i18n="footer"></footer>
 </div>
- 
+
 <script>
 /* ================= i18n ================= */
 const T = {
@@ -246,7 +246,7 @@ const T = {
   fr:{name:"Français",tagline:"Voyez à quel point vous correspondez à un poste — avant d'y passer la soirée.",sub:"Collez votre CV et une ou plusieurs offres. JobFit classe votre correspondance et montre les mots exacts à ajouter. Tout poste, tout domaine, tout pays.",privacy:"Tout reste dans votre navigateur. Rien n'est envoyé ni enregistré.",tryLabel:"Essayez un exemple :",resumeLabel:"Votre CV",resumeHint:"Collez le texte complet — copiez-le depuis votre document.",resumePh:"Collez votre CV ici…",jobLabel:"L'offre (ou les offres)",jobHint:"Collez une offre, ou ajoutez-en plusieurs pour les classer.",jobPh:"Collez une description de poste ici…",addJob:"+ Ajouter une offre",fieldSummary:"Ajoutez des termes clés de votre domaine (facultatif)",fieldHint:"Expressions de votre domaine, séparées par des virgules. ex. : rest api, patient care",fieldPh:"soins aux patients, dossier médical électronique",analyzeBtn:"Voir votre correspondance",healthBtn:"Vérifier mon CV",matched:"Déjà dans votre CV",missing:"À ajouter (si c'est vrai)",mustHave:"Indispensables manquants",niceHave:"Souhaitables",ranking:"Vos offres, classées",healthTitle:"Santé du CV",builderTitle:"Constructeur de CV",builderIntro:"Des points de départ honnêtes pour les manques. Ajoutez seulement ce qui est vrai, puis relancez.",addSkills:"Ajoutez à votre section Compétences",addExp:"Ajoutez une puce sous votre poste le plus pertinent",copyLines:"Copier ces lignes",copied:"Copié \u2713",ngTitle:"Jeune diplômé ou sans expérience ? Créez un CV de départ \u2192",ngIntro:"Vous avez plus que vous ne pensez — cours, projets, bénévolat et emplois à temps partiel comptent. Remplissez ce qui s\u0027applique, ignorez le reste, et nous rédigerons un CV modifiable.",ngDegree:"Diplôme et domaine",ngSchool:"École et année",ngSkills:"Compétences et outils (séparés par des virgules)",ngProjects:"Projets (un par ligne)",ngIntern:"Stages (un par ligne)",ngParttime:"Emplois à temps partiel (un par ligne)",ngVolunteer:"Bénévolat, clubs, leadership (un par ligne)",ngGenerate:"Créer mon CV de départ",regionLabel:"Où postulez-vous ?",ngPerLine:"Appuyez sur Entrée après chaque élément \u2014 chaque ligne devient une puce.",ngSkillsHint:"Sur une seule ligne, séparées par des virgules.",aboutTitle:"À propos de cet outil \u2014 la version honnête",aboutGood:"Ses points forts",aboutBad:"À savoir",footer:"Conçu pour réduire le stress de la recherche · fonctionne sur votre appareil · gratuit · sans compte.",v_strong:["Bonne correspondance","Vous couvrez l'essentiel. Un léger ajustement et vous êtes prêt."],v_good:["Bonne base","Vous êtes dans la cible. Ajoutez quelques termes à droite qui vous correspondent."],v_tailor:["À ajuster","Une vraie base ici. Ajouter les termes manquants augmentera nettement le score."],v_stretch:["Un défi — mais possible","Loin de votre CV actuel. À tenter si le poste vous motive ; ajustez beaucoup."],v_low:["Faible correspondance","Votre CV et l'offre partagent peu de mots. Si c'est votre domaine, ajoutez les vraies compétences."]},
   ar:{name:"العربية",tagline:"اعرف مدى ملاءمتك للوظيفة — قبل أن تقضي مساءً كاملاً في التقديم.",sub:"الصق سيرتك الذاتية وإعلان وظيفة أو أكثر. يرتّب JobFit مدى تطابقك ويعرض الكلمات الدقيقة التي يُستحسن إضافتها. أي وظيفة، أي مجال، أي بلد.",privacy:"كل شيء يبقى في متصفحك. لا يُرفع شيء ولا يُحفظ.",tryLabel:"جرّب مثالاً:",resumeLabel:"سيرتك الذاتية",resumeHint:"الصق النص كاملاً — انسخه من مستندك.",resumePh:"الصق سيرتك الذاتية هنا…",jobLabel:"إعلان (إعلانات) الوظيفة",jobHint:"الصق وظيفة واحدة، أو أضف عدة وظائف لترتيبها.",jobPh:"الصق وصف الوظيفة هنا…",addJob:"+ أضف وظيفة أخرى",fieldSummary:"أضف مصطلحات مجالك (اختياري)",fieldHint:"عبارات مجالك مفصولة بفواصل. مثل: rest api, patient care",fieldPh:"رعاية المرضى، السجلات الصحية الإلكترونية",analyzeBtn:"اعرض تطابقك",healthBtn:"افحص سيرتي",matched:"موجود في سيرتك",missing:"يُستحسن إضافته (إن كان صحيحاً)",mustHave:"أساسيات ناقصة",niceHave:"مُفضّلة",ranking:"وظائفك مرتّبة",healthTitle:"صحة السيرة الذاتية",builderTitle:"منشئ السيرة الذاتية",builderIntro:"نقاط بداية صادقة للفجوات. أضف ما هو صحيح فقط ثم أعد التحليل.",addSkills:"أضف إلى قسم المهارات",addExp:"أضف نقطة تحت أنسب وظيفة لك",copyLines:"انسخ هذه الأسطر",copied:"تم النسخ \u2713",ngTitle:"خريج جديد أو بلا خبرة؟ أنشئ سيرة ذاتية مبدئية \u2192",ngIntro:"لديك أكثر مما تظن — المواد الدراسية والمشاريع والتطوع والعمل الجزئي كلها مهمة. املأ ما ينطبق وسننشئ سيرة قابلة للتعديل.",ngDegree:"الدرجة والتخصص",ngSchool:"الجامعة والسنة",ngSkills:"المهارات والأدوات (مفصولة بفواصل)",ngProjects:"المشاريع (واحد لكل سطر)",ngIntern:"التدريب (واحد لكل سطر)",ngParttime:"وظائف جزئية (واحدة لكل سطر)",ngVolunteer:"التطوع، الأندية، القيادة (واحد لكل سطر)",ngGenerate:"أنشئ سيرتي المبدئية",regionLabel:"أين تتقدم للوظيفة؟",ngPerLine:"اضغط Enter بعد كل عنصر \u2014 كل سطر يصبح نقطة مستقلة.",ngSkillsHint:"اكتبها في سطر واحد مفصولة بفواصل.",aboutTitle:"حول هذه الأداة \u2014 بصراحة",aboutGood:"فيمَ تتميز",aboutBad:"من الجيد معرفته",footer:"صُمم لتخفيف ضغط البحث · يعمل على جهازك · مجاني · بدون حساب.",v_strong:["تطابق قوي","تغطي معظم ما يطلبونه. تعديل بسيط وستكون جاهزاً."],v_good:["أساس جيد","أنت ضمن النطاق. أضف بعض المصطلحات على اليمين الصحيحة بشأنك."],v_tailor:["يستحق التعديل","هناك أساس حقيقي. إضافة المصطلحات الناقصة سترفع النتيجة كثيراً."],v_stretch:["تحدٍّ لكنه ممكن","أبعد من سيرتك الحالية. يستحق المحاولة إن حمّستك الوظيفة."],v_low:["تطابق ضعيف","سيرتك والإعلان يتشاركان كلمات قليلة. إن كان هذا مجالك فأضف المهارات الحقيقية."]},
 };
- 
+
 /* ================= engine (validated) ================= */
 const STOP = new Set(("the and for with you your our are will have has this that from their they them all any can may who what when where how why about into than then such able work working role team teams company job position candidate candidates experience years year ability strong excellent good great well high new other more must should would also etc including include includes plus preferred required requirements responsibilities skills looking join help support across within using use provide ensure drive develop manage lead build a an of to in on at as is be by or we us it our your their his her its own deliver delivers reduce reduces reduction improve improves improving improvement improvements project projects responsible partner ownership opportunity environment additional various following core daily department departments related ideal successful you've role's essential minimum qualifications qualification mandatory desirable advantage proficient proficiency expertise seeking offer offers benefits salary apply applicant hiring hire applicants not every each both either most more less few many much some any several various big small large major minor whole entire main central general overall specific particular certain real full short long high low old early late fast easy hard simple basic clear first second third next final thing things way ways area part parts piece type types kind sort case item aspect factor element detail point level scope very really quite just only even still already always never often usually maybe perhaps possibly likely simply mostly largely fully highly greatly strongly closely directly currently recently previously finally eventually here there now then via per onto upon toward towards beyond near far site deal range group single mission beneficial significant wide broad close open similar different multiple individual key").split(" "));
 const PHRASES = ["power bi","power query","month end","month-end","financial planning","financial modeling","variance analysis","cost to serve","cost-to-serve","data visualization","business intelligence","general ledger","accounts payable","accounts receivable","cash flow","forecast accuracy","stakeholder management","advanced excel","scenario analysis","project management","customer service","data analysis","problem solving","time management","attention to detail","team leadership","communication skills","continuous improvement","quality assurance","supply chain","social media","content creation","customer experience","process improvement","machine learning","cloud computing","unit testing","rest api","ci cd","patient care","electronic health records","acute care","wound care","medication administration","blueprint reading","preventive maintenance","fall protection","google analytics","paid search","email marketing","risk management","agile scrum","lesson planning","classroom management","curriculum development"];
@@ -304,7 +304,7 @@ function healthCheck(resume,region){
   if(region&&region.personal===false&&/\b(date of birth|d\.?o\.?b\.?|marital status|nationality)\b/i.test(resume))checks.push({ok:false,label:"Remove personal details (date of birth / marital status) - not expected for "+region.name});
   return{score:Math.round(100*checks.filter(x=>x.ok).length/checks.length),checks};
 }
- 
+
 /* ================= examples ================= */
 const EXAMPLES = {
   Finance:{extra:[],resume:"Hemanth — Finance & Analytics Lead. Improved forecast accuracy 15%. Cut reporting cycle T+10 to T+3. Built Power BI dashboards replacing 4 manual reports. Variance analysis, month-end close, financial planning, SQL, Advanced Excel, Power Query.",job:"Senior Financial Analyst. Required: financial planning, month-end close, variance analysis, Advanced Excel and SQL. Power BI preferred. Stakeholder management essential."},
@@ -313,7 +313,7 @@ const EXAMPLES = {
   Trades:{extra:["blueprint reading","preventive maintenance","fall protection"],resume:"Licensed Electrician. Electrical wiring, blueprint reading, preventive maintenance, circuit testing. Fall protection certified. Conduit bending.",job:"Industrial Electrician required. Must have blueprint reading and electrical wiring. Preventive maintenance essential. Fall protection certification."},
   Marketing:{extra:["social media","content creation","google analytics","paid search"],resume:"Marketing Manager. Ran social media, content creation, paid search, email marketing. Google Analytics. SEO, brand strategy.",job:"Digital Marketing Manager required. Social media, content creation and paid search essential. Google Analytics. Email marketing and SEO preferred."},
 };
- 
+
 const REGIONS={
 global:{name:"Global / not sure",note:"Norms vary by country. When unsure, keep it clean: skip photo, date of birth and marital status unless a local employer clearly expects them."},
 na:{name:"US / Canada",note:"No photo, no date of birth, no marital status or gender. 1 page (2 if very experienced). Called a resume. Do not list references; omit or say available on request.",personal:false},
@@ -323,7 +323,7 @@ me:{name:"Middle East",note:"A photo and personal details (date of birth, nation
 asia:{name:"India / Asia",note:"A photo and personal details are often expected and vary widely by country. 1-2 pages. Check the local norm where you apply.",personal:true},
 anz:{name:"Australia / NZ",note:"No photo, no date of birth. 2-3 pages is acceptable. Called a resume or CV.",personal:false},
 };
- 
+
 /* ================= UI ================= */
 let lang="en";
 function applyLang(code){
@@ -337,19 +337,19 @@ function applyLang(code){
 const langSel=document.getElementById("lang");
 Object.keys(T).forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=T[c].name;langSel.appendChild(o);});
 langSel.addEventListener("change",e=>applyLang(e.target.value));
- 
+
 const regionSel=document.getElementById("region");
 Object.keys(REGIONS).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=REGIONS[k].name;regionSel.appendChild(o);});
 function renderRegionNote(){const r=REGIONS[regionSel.value];document.getElementById("regionNote").textContent=r?r.note:"";}
 regionSel.addEventListener("change",renderRegionNote);
 renderRegionNote();
- 
+
 document.getElementById("theme").addEventListener("click",()=>{
   const dark=document.documentElement.getAttribute("data-theme")==="dark";
   document.documentElement.setAttribute("data-theme",dark?"light":"dark");
   document.getElementById("theme").innerHTML=dark?"\u263D":"\u2600";
 });
- 
+
 const jobsEl=document.getElementById("jobs");
 function addJob(value){
   const div=document.createElement("div");div.className="job-entry";
@@ -361,7 +361,7 @@ function addJob(value){
 function syncRemove(){const ents=jobsEl.querySelectorAll(".job-entry");ents.forEach(e=>e.querySelector(".job-rm").style.display=ents.length>1?"block":"none");}
 document.getElementById("addJob").addEventListener("click",()=>addJob());
 addJob();
- 
+
 document.getElementById("exChips").innerHTML=Object.keys(EXAMPLES).map(k=>`<button class="ex-chip" data-ex="${k}">${k}</button>`).join("");
 document.getElementById("exChips").addEventListener("click",e=>{
   const k=e.target.getAttribute("data-ex");if(!k)return;const ex=EXAMPLES[k];
@@ -369,11 +369,11 @@ document.getElementById("exChips").addEventListener("click",e=>{
   jobsEl.innerHTML="";addJob(ex.job);
   document.getElementById("phrases").value=ex.extra.join(", ");
 });
- 
+
 function verdict(p){const t=T[lang];return p>=70?t.v_strong:p>=50?t.v_good:p>=30?t.v_tailor:p>=15?t.v_stretch:t.v_low;}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function labelOf(job,i){const first=(job.split("\n").find(l=>l.trim())||"").trim();return first?first.slice(0,52):("Job "+(i+1));}
- 
+
 const TOOLS=new Set("excel sql python java javascript typescript tableau aws azure gcp docker kubernetes sap quickbooks salesforce photoshop illustrator figma jira git github react node powerpoint autocad solidworks matlab".split(" "));
 const isPhrase=k=>k.includes(" ")||k.includes("-");
 const skillLike=k=>isPhrase(k)||TOOLS.has(k);
@@ -395,7 +395,7 @@ function buildBuilder(missing){
   if(ex.length) h+=`<div class="bsec"><h4>${esc(t.addExp)}</h4>${ex.slice(0,8).map(m=>`<div class="bline"><div class="kw">${esc(m.kw)}</div><textarea>${esc(exampleFor(m.kw))}</textarea></div>`).join("")}<button class="btn-soft" id="copyLines">${esc(t.copyLines)}</button></div>`;
   return h+`</div>`;
 }
- 
+
 function analyze(){
   const resume=document.getElementById("resume").value.trim();
   const extra=document.getElementById("phrases").value.split(",").map(s=>s.trim()).filter(Boolean);
@@ -403,7 +403,7 @@ function analyze(){
   const out=document.getElementById("result");
   if(!resume||!jobs.length){out.innerHTML=`<div class="result-card"><p style="padding:20px;margin:0;color:var(--muted)">Add your resume and at least one job posting, then press the button.</p></div>`;return;}
   const data=jobs.map((j,i)=>({label:labelOf(j,i),...scoreJob(resume,j,extra)})).sort((a,b)=>b.pct-a.pct);
- 
+
   let html="";
   if(data.length>1){
     html+=`<div class="rank-summary"><h2>${esc(T[lang].ranking)}</h2>`;
@@ -446,7 +446,7 @@ function showHealth(){
 }
 document.getElementById("go").addEventListener("click",analyze);
 document.getElementById("health").addEventListener("click",showHealth);
- 
+
 function generateStarter(){
   const g=id=>(document.getElementById(id).value||"").trim();
   const lines=id=>g(id).split("\n").map(s=>s.trim()).filter(Boolean);
@@ -479,4 +479,3 @@ applyLang("en");
 </script>
 </body>
 </html>
- 
